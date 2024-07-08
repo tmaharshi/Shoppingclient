@@ -14,7 +14,6 @@ variables:
   dockerRegistryServiceConnection: '6c95f8a1-d237-4f81-8559-98ff64053f38'
   imageRepository: 'tmaharshishoppingclient'
   containerRegistry: 'shoppingclientacr.azurecr.io'
-  dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
   imagePullSecret: 'shoppingclientacr1975b229-auth'
 
@@ -38,13 +37,24 @@ stages:
       inputs:
         command: buildAndPush
         repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
+        dockerfile: Shopping/Shopping.API/Dockerfile
         containerRegistry: $(dockerRegistryServiceConnection)
+        buildContext: $(Build.SourcesDirectory)/Shopping
+        tags: |
+          $(tag)
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: Shopping/Shopping.Client/Dockerfile
+        containerRegistry: $(dockerRegistryServiceConnection)
+        buildContext: $(Build.SourcesDirectory)/Shopping
         tags: |
           $(tag)
 
-    - upload: manifests
-      artifact: manifests
+    - upload: aks
+      artifact: aks
 
 - stage: Deploy
   displayName: Deploy stage

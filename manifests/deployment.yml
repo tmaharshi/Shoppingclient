@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: tmaharshishoppingclient 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tmaharshishoppingclient
+  template:
+    metadata:
+      labels:
+        app: tmaharshishoppingclient 
+    spec:
+      containers:
+        - name: tmaharshishoppingclient 
+          image: shoppingclientacr.azurecr.io/tmaharshishoppingclient
+          ports:
+          - containerPort: 80

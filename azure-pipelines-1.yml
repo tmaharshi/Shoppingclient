@@ -37,7 +37,7 @@ stages:
       inputs:
         command: buildAndPush
         repository: $(imageRepository)
-        dockerfile: 'Shopping/Shopping.API/Dockerfile'
+        dockerfile: '$(Build.SourcesDirectory)/Shopping/Shopping.API/Dockerfile'
         containerRegistry: $(dockerRegistryServiceConnection)
         buildContext: $(Build.SourcesDirectory)/Shopping
         tags: |
@@ -47,7 +47,7 @@ stages:
       inputs:
         command: buildAndPush
         repository: $(imageRepository)
-        dockerfile: 'Shopping/Shopping.Client/Dockerfile'
+        dockerfile: '$(Build.SourcesDirectory)/Shopping/Shopping.Client/Dockerfile'
         containerRegistry: $(dockerRegistryServiceConnection)
         buildContext: $(Build.SourcesDirectory)/Shopping
         tags: |
